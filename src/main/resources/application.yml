@@ -1,0 +1,39 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: hocade-api-gateway
+  security:
+    oauth2:
+      client:
+        registration:
+          gateway:
+            provider: auth-server
+            client-id: hocade-api-gateway
+            client-secret: asdascnjNJCWQkd
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://localhost:8081/login/oauth2/code/{registrationId}"
+            scope: openid, message.read
+        provider:
+          auth-server:
+            issuer-uri: http://localhost:8082
+  cloud:
+    gateway:
+      routes:
+        - id: socket-service
+          uri: ws://localhost:9091
+          predicates:
+            - Path=/socket
+        - id: rest-service
+          uri: http://localhost:9092
+          predicates:
+            - Path=/api
+          filters:
+            - TokenRelay=
+
+logging:
+  level:
+    root: INFO
+    com.example: DEBUG
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.security: TRACE
