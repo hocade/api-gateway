@@ -12,15 +12,8 @@ spring:
           predicates:
             - Path=/api/**
           filters:
-            - StripPrefix=1
-          # OAuth 2.0 client configuration
-#          metadata:
-#            client-id: your-client-id
-#            client-secret: your-client-secret
-#            token-uri: http://localhost:8082/auth/token
-#            openid-connect 방식
-#            resource-uri: http://localhost:8082/auth/realms/myrealm/protocol/openid-connect/certs
-#            issuer-uri: http://localhost:8082/auth/realms/myrealm
+            - TokenRelay=
+            - OAuthGatewayFilter=
           order: 1
         - id: websocket-route
           uri: ws://localhost:9092
@@ -34,19 +27,6 @@ spring:
         jwt:
           jwk-set-uri: {YOUR_JWK_SET_URI} # JWT 토큰을 검증하기 위한 JWK Set URI
           issuer-uri: {YOUR_ISSUER_URI}   # JWT 토큰 발급자(issuer) URI
-      client:
-        registration:
-          api-gateway:
-            client-id: {YOUR_CLIENT_ID}            # 클라이언트 ID
-            client-secret: {YOUR_CLIENT_SECRET}    # 클라이언트 Secret
-            authorization-grant-type: authorization_code # 인가 유형
-            redirect-uri: "http://localhost:8081/login/oauth2/code/api-gateway" # 리디렉션 URI
-            scope: openid, profile, email                # 요청 범위
-            provider: hocade-provider
-        provider:
-          hocade-provider:
-            authorization-uri: {YOUR_AUTHORIZATION_URI}   # OAuth 2.0 인증 엔드포인트 URI
-            token-uri: {YOUR_TOKEN_URI}                   # OAuth 2.0 토큰 엔드포인트 URI
 
 logging:
   level:

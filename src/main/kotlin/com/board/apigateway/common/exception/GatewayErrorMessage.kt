@@ -10,6 +10,5 @@ enum class GatewayErrorMessage(
         val errorCode: String,
         val httpStatus: HttpStatus
 ){
-    //
-
+        UNAUTHORIZED_OAUTH("9001", HttpStatus.UNAUTHORIZED),
 }
