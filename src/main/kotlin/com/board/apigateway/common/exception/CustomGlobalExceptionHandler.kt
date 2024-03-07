@@ -1,5 +1,6 @@
 package com.board.apigateway.common.exception
 
+import com.board.apigateway.common.utils.MessageSourceUtil
 import org.springframework.boot.autoconfigure.web.WebProperties
 import org.springframework.boot.autoconfigure.web.reactive.error.AbstractErrorWebExceptionHandler
 import org.springframework.boot.web.reactive.error.ErrorAttributes
@@ -17,10 +18,11 @@ import reactor.core.publisher.Mono
  */
 @Component
 class CustomGlobalExceptionHandler(
-        errorAttributes: ErrorAttributes,
-        resources: WebProperties.Resources,
-        applicationContext: ApplicationContext,
-        serverCodecConfigurer: ServerCodecConfigurer,
+        private val errorAttributes: ErrorAttributes,
+        private val resources: WebProperties.Resources,
+        private val applicationContext: ApplicationContext,
+        private val messageSourceUtil: MessageSourceUtil,
+        serverCodecConfigurer: ServerCodecConfigurer
 ): AbstractErrorWebExceptionHandler(
         errorAttributes, resources, applicationContext
 ) {
@@ -42,7 +44,7 @@ class CustomGlobalExceptionHandler(
                         .bodyValue(
                                 BaseExceptionResponse(
                                         errorCode = errorMsg.errorCode,
-                                        message = "에러 코드로 메시지 파싱해서 전달해야함",
+                                        message = messageSourceUtil.getMessage(errorMsg.errorCode)
                                 )
                         )
             }
