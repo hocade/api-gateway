@@ -27,6 +27,7 @@ dependencyManagement {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.projectlombok:lombok")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.cloud:spring-cloud-starter-gateway")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
