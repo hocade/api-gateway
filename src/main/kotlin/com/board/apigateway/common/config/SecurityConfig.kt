@@ -2,6 +2,7 @@ package com.board.apigateway.common.config
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.web.server.SecurityWebFilterChain
 
@@ -12,6 +13,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain
  * @since 2024-02-22
  */
 @Configuration
+@EnableWebFluxSecurity
 class SecurityConfig {
 
     @Bean
